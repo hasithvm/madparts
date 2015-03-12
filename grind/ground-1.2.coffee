@@ -380,6 +380,23 @@ single = (unit, num, distance) ->
   )
   generate_names (combine units)
 
+
+# create a grid of 'num_x' x 'num_y' units 'distance' apart
+grid = (unit, num_x, num_y, distance) ->
+  unit = make_sure_is_array unit
+  y = (num_y-1) * distance /2
+  row = rot_single unit, num_x, distance
+
+  units = [0...num_y].map((i)->
+    dy = -y + i * distance
+    row.map((item) -> 
+      item2 = clone item
+      adjust_y item2, dy
+    )
+  )
+  generate_names (combine units)
+
+
 # create a horizontal range of 'num' units 'distance' apart
 rot_single = (unit, num, distance) ->
   unit = make_sure_is_array unit
